@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "products/base.html" %}
 {% load static %}
 
 
@@ -67,11 +67,15 @@
                                 </h4>
                                 <h5>{{product.price}},00 руб.</h5>
                                 <p class="card-text">
-                                    {{product.text}}
+                                    {{product.description}}
                                 </p>
                             </div>
+
                             <div class="card-footer text-center">
-                                <button type="button" class="btn btn-outline-success">Отправить в корзину</button>
+                                <a class="btn btn-outline-success" href="{% url "products:basket_add" product.id %}"> 
+                                    Отправить в корзину
+                                </a>
+                                {% comment %} <button type="button" class="btn btn-outline-success">Отправить в корзину</button> {% endcomment %}
                             </div>
                         </div>
                     </div>
