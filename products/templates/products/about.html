@@ -1,0 +1,202 @@
+{% extends "products/base.html" %}
+
+{% load static %}
+
+{% block css %}
+
+<link href="{% static "css/about.css" %}" rel="stylesheet">
+
+{% endblock  %}
+
+
+{% block content %}
+
+<div class="hero-about text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-4">О {{ title }}</h1>
+            <p class="lead">Мы - больше чем просто магазин. Мы - сообщество геймеров.</p>
+        </div>
+    </div>
+
+    <!-- О компании -->
+    <div class="container mb-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="mb-4">Наша история</h2>
+                <p>{{ title }} был основан в 2018 году группой энтузиастов, которые устали от завышенных цен и плохого сервиса на рынке цифровых товаров.</p>
+                <p>Начиная с маленького сайта с десятком игр, сегодня мы предлагаем более 5000 цифровых товаров для всех популярных платформ.</p>
+                <p>Наша миссия - сделать игры доступными для всех, сохраняя при этом высокое качество обслуживания.</p>
+                <div class="mt-4">
+                    <a href="{% url "products:index" %}" class="btn btn-primary btn-lg">Перейти в каталог</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="https://via.placeholder.com/600x400?text=Our+Team" alt="Наша команда" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+
+    <!-- Наши преимущества -->
+    <div class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Почему выбирают нас</h2>
+            <div class="row">
+                <div class="col-md-4 text-center mb-4">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>100% гарантия</h4>
+                    <p>Все ключи приобретаются напрямую у издателей. Мы гарантируем подлинность каждого продукта.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <div class="feature-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h4>Лучшие цены</h4>
+                    <p>Благодаря прямым контрактам с издателями мы предлагаем самые выгодные цены на рынке.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>Мгновенная доставка</h4>
+                    <p>Получите свой ключ сразу после оплаты. Не нужно ждать - можно начинать играть!</p>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h4>Поддержка 24/7</h4>
+                    <p>Наша служба поддержки работает круглосуточно и готова помочь в любой ситуации.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <div class="feature-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h4>Бонусная система</h4>
+                    <p>Копите бонусы за покупки и получайте скидки на следующие заказы.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h4>Международный подход</h4>
+                    <p>Мы работаем с клиентами из 15 стран и постоянно расширяем географию.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Наша команда -->
+    <div class="container py-5">
+        <h2 class="text-center mb-5">Наша команда</h2>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <div class="team-card">
+                    <img src="https://via.placeholder.com/150?text=Alex" alt="Алексей" class="team-img">
+                    <h4>Алексей Смирнов</h4>
+                    <p class="text-muted">Основатель & CEO</p>
+                    <p>Создал {{ title }} с нуля. Отвечает за стратегическое развитие компании.</p>
+                    <div>
+                        <a href="#" class="text-primary me-2"><i class="fab fa-vk"></i></a>
+                        <a href="#" class="text-primary me-2"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="text-primary"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="team-card">
+                    <img src="https://via.placeholder.com/150?text=Elena" alt="Елена" class="team-img">
+                    <h4>Елена Ковалева</h4>
+                    <p class="text-muted">Маркетинг директор</p>
+                    <p>Отвечает за продвижение бренда и работу с партнерами.</p>
+                    <div>
+                        <a href="#" class="text-primary me-2"><i class="fab fa-vk"></i></a>
+                        <a href="#" class="text-primary me-2"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="text-primary"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="team-card">
+                    <img src="https://via.placeholder.com/150?text=Max" alt="Максим" class="team-img">
+                    <h4>Максим Петров</h4>
+                    <p class="text-muted">Технический директор</p>
+                    <p>Разрабатывает и поддерживает платформу магазина.</p>
+                    <div>
+                        <a href="#" class="text-primary me-2"><i class="fab fa-vk"></i></a>
+                        <a href="#" class="text-primary me-2"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="text-primary"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Хронология -->
+    {% comment %} <div class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Наши достижения</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>2018 год</h4>
+                    <p>Основание компании. Первые 50 игр в каталоге. 1000 довольных клиентов за первый год работы.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2019 год</h4>
+                    <p>Заключены контракты с крупными издателями. Каталог расширен до 500 игр.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2020 год</h4>
+                    <p>Запуск собственной бонусной программы. Преодолен рубеж в 10 000 клиентов.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2021 год</h4>
+                    <p>Расширение на международный рынок. Поддержка 5 новых языков на сайте.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2022 год</h4>
+                    <p>Премия "Лучший игровой магазин года" по версии Game Awards Russia.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2023 год</h4>
+                    <p>Более 50 000 довольных клиентов. Каталог превысил 5000 товаров.</p>
+                </div>
+            </div>
+        </div>
+    </div> {% endcomment %}
+
+    <!-- Контакты -->
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="mb-4">Свяжитесь с нами</h2>
+                <p><i class="fas fa-map-marker-alt me-2"></i> г. Москва, ул. Пушкина, д. 42</p>
+                <p><i class="fas fa-phone me-2"></i> +7 (800) 123-45-67</p>
+                <p><i class="fas fa-envelope me-2"></i> support@#.ru</p>
+                <div class="mt-4">
+                    <a href="#" class="btn btn-outline-dark me-2"><i class="fab fa-vk"></i></a>
+                    <a href="#" class="btn btn-outline-dark me-2"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="btn btn-outline-dark me-2"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="btn btn-outline-dark"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2 class="mb-4">Остались вопросы?</h2>
+                <form>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Ваше имя">
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" rows="4" placeholder="Ваше сообщение"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock  %}

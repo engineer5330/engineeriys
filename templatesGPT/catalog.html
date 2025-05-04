@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог игр | GameKey Store</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .game-card {
+            transition: transform 0.2s;
+            margin-bottom: 20px;
+        }
+        .game-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .filter-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .price-range {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .platform-badge {
+            font-size: 0.8rem;
+        }
+        .pagination {
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .sorting-options {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигационная панель (такая же, как на главной) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">GameKey Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/catalog/">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about/">О нас</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="/cart/" class="btn btn-outline-light me-2">
+                        Корзина (<span id="cart-count">0</span>)
+                    </a>
+                    <a href="/login/" class="btn btn-primary">Войти</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <div class="container mt-4">
+        <h1 class="mb-4">Каталог игр</h1>
+        
+        <!-- Фильтры и сортировка -->
+        <div class="row">
+            <!-- Блок фильтров -->
+            <div class="col-md-3">
+                <div class="filter-section">
+                    <h4>Фильтры</h4>
+                    
+                    <!-- Фильтр по платформам -->
+                    <div class="mb-4">
+                        <h5>Платформа</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="platform-steam" checked>
+                            <label class="form-check-label" for="platform-steam">
+                                Steam
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="platform-epic" checked>
+                            <label class="form-check-label" for="platform-epic">
+                                Epic Games
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="platform-origin" checked>
+                            <label class="form-check-label" for="platform-origin">
+                                Origin
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Фильтр по жанрам -->
+                    <div class="mb-4">
+                        <h5>Жанр</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="genre-rpg" checked>
+                            <label class="form-check-label" for="genre-rpg">
+                                RPG
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="genre-shooter" checked>
+                            <label class="form-check-label" for="genre-shooter">
+                                Шутеры
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="genre-strategy" checked>
+                            <label class="form-check-label" for="genre-strategy">
+                                Стратегии
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="genre-simulator" checked>
+                            <label class="form-check-label" for="genre-simulator">
+                                Симуляторы
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Фильтр по цене -->
+                    <div class="mb-4">
+                        <h5>Цена</h5>
+                        <div class="price-range">
+                            <input type="number" class="form-control" placeholder="От" value="0">
+                            <span>-</span>
+                            <input type="number" class="form-control" placeholder="До" value="10000">
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-sm btn-primary w-100">Применить</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Фильтр по скидкам -->
+                    <div>
+                        <h5>Скидки</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="discount-only">
+                            <label class="form-check-label" for="discount-only">
+                                Только со скидкой
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Блок товаров -->
+            <div class="col-md-9">
+                <!-- Сортировка -->
+                <div class="sorting-options d-flex justify-content-between align-items-center">
+                    <div>Найдено 24 товара</div>
+                    <div>
+                        <select class="form-select">
+                            <option selected>Сортировка: по популярности</option>
+                            <option>Сначала дешевые</option>
+                            <option>Сначала дорогие</option>
+                            <option>По новизне</option>
+                            <option>По рейтингу</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Сетка товаров -->
+                <div class="row">
+                    <!-- Товар 1 -->
+                    <div class="col-md-4">
+                        <div class="card game-card h-100">
+                            <span class="badge bg-danger position-absolute" style="top: 10px; right: 10px;">-20%</span>
+                            <img src="https://via.placeholder.com/300x200?text=Cyberpunk+2077" class="card-img-top" alt="Cyberpunk 2077">
+                            <div class="card-body">
+                                <h5 class="card-title">Cyberpunk 2077</h5>
+                                <p class="card-text">Открытый мир будущего от создателей The Witcher 3.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-success platform-badge">Steam</span>
+                                    <div>
+                                        <span class="text-muted text-decoration-line-through me-2">2499 ₽</span>
+                                        <span class="text-danger fw-bold">1999 ₽</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <a href="#" class="btn btn-primary w-100">В корзину</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Товар 2 -->
+                    <div class="col-md-4">
+                        <div class="card game-card h-100">
+                            <img src="https://via.placeholder.com/300x200?text=Elden+Ring" class="card-img-top" alt="Elden Ring">
+                            <div class="card-body">
+                                <h5 class="card-title">Elden Ring</h5>
+                                <p class="card-text">Новая игра от создателей Dark Souls и Джорджа Мартина.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary platform-badge">Epic Games</span>
+                                    <span class="text-danger fw-bold">3499 ₽</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <a href="#" class="btn btn-primary w-100">В корзину</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Товар 3 -->
+                    <div class="col-md-4">
+                        <div class="card game-card h-100">
+                            <span class="badge bg-danger position-absolute" style="top: 10px; right: 10px;">-50%</span>
+                            <img src="https://via.placeholder.com/300x200?text=Valheim" class="card-img-top" alt="Valheim">
+                            <div class="card-body">
+                                <h5 class="card-title">Valheim</h5>
+                                <p class="card-text">Выживание в мире скандинавской мифологии.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-info platform-badge">Steam</span>
+                                    <div>
+                                        <span class="text-muted text-decoration-line-through me-2">1599 ₽</span>
+                                        <span class="text-danger fw-bold">799 ₽</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <a href="#" class="btn btn-primary w-100">В корзину</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Товар 4 -->
+                    <div class="col-md-4">
+                        <div class="card game-card h-100">
+                            <img src="https://via.placeholder.com/300x200?text=Hogwarts+Legacy" class="card-img-top" alt="Hogwarts Legacy">
+                            <div class="card-body">
+                                <h5 class="card-title">Hogwarts Legacy</h5>
+                                <p class="card-text">Отправляйтесь в Хогвартс в этой ролевой игре по вселенной Гарри Поттера.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-success platform-badge">Steam</span>
+                                    <span class="text-danger fw-bold">3999 ₽</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <a href="#" class="btn btn-primary w-100">В корзину</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Товар 5 -->
+                    <div class="col-md-4">
+                        <div class="card game-card h-100">
+                            <span class="badge bg-danger position-absolute" style="top: 10px; right: 10px;">-30%</span>
+                            <img src="https://via.placeholder.com/300x200?text=The+Witcher+3" class="card-img-top" alt="The Witcher 3">
+                            <div class="card-body">
+                                <h5 class="card-title">The Witcher 3: Wild Hunt</h5>
+                                <p class="card-text">Легендарная RPG с открытым миром и захватывающим сюжетом.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-success platform-badge">Steam</span>
+                                    <div>
+                                        <span class="text-muted text-decoration-line-through me-2">1999 ₽</span>
+                                        <span class="text-danger fw-bold">1399 ₽</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <a href="#" class="btn btn-primary w-100">В корзину</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Товар 6 -->
+                    <div class="col-md-4">
+                        <div class="card game-card h-100">
+                            <img src="https://via.placeholder.com/300x200?text=Starfield" class="card-img-top" alt="Starfield">
+                            <div class="card-body">
+                                <h5 class="card-title">Starfield</h5>
+                                <p class="card-text">Новая космическая RPG от создателей Skyrim и Fallout.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary platform-badge">Epic Games</span>
+                                    <span class="text-danger fw-bold">4499 ₽</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <a href="#" class="btn btn-primary w-100">В корзину</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Пагинация -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подвал (такой же, как на главной) -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2024 GameKey Store. Все права защищены.</p>
+            <div class="mt-2">
+                <a href="#" class="text-white me-3">Политика конфиденциальности</a>
+                <a href="#" class="text-white me-3">Условия использования</a>
+                <a href="#" class="text-white">Контакты</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

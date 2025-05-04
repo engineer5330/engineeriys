@@ -1,0 +1,193 @@
+{% extends "products/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/catalog.css' %}" rel="stylesheet">
+{% endblock  %}
+
+
+{% block content %}
+
+ <div class="container mt-4">
+        <h1 class="mb-4">Каталог игр</h1>
+        
+        
+        <div class="row">
+            
+            <div class="col-md-3">
+                <div class="filter-section">
+                    <h4>Фильтры</h4>
+                    
+                    
+                    <div class="mb-4">
+                        <h5>Платформа</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="platform-steam" checked>
+                            <label class="form-check-label" for="platform-steam">
+                                Steam
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="platform-epic" checked>
+                            <label class="form-check-label" for="platform-epic">
+                                Epic Games
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="platform-origin" checked>
+                            <label class="form-check-label" for="platform-origin">
+                                Origin
+                            </label>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="mb-4">
+                        <h5>Жанр</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="genre-rpg" checked>
+                            <label class="form-check-label" for="genre-rpg">
+                                RPG
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="genre-shooter" checked>
+                            <label class="form-check-label" for="genre-shooter">
+                                Шутеры
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="genre-strategy" checked>
+                            <label class="form-check-label" for="genre-strategy">
+                                Стратегии
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="genre-simulator" checked>
+                            <label class="form-check-label" for="genre-simulator">
+                                Симуляторы
+                            </label>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="mb-4">
+                        <h5>Цена</h5>
+                        <div class="price-range">
+                            <input type="number" class="form-control" placeholder="От" value="0">
+                            <span>-</span>
+                            <input type="number" class="form-control" placeholder="До" value="10000">
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-sm btn-primary w-100">Применить</button>
+                        </div>
+                    </div>
+                    
+                    
+                    <div>
+                        <h5>Скидки</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="discount-only">
+                            <label class="form-check-label" for="discount-only">
+                                Только со скидкой
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="col-md-9">
+                
+                <div class="sorting-options d-flex justify-content-between align-items-center">
+                    {% comment %} <div>Найдено {{count}}</div> с сортировкой починить{% endcomment %}
+                    <div>
+                        <select class="form-select">
+                            <option selected>Сортировка: по популярности</option>
+                            <option>Сначала дешевые</option>
+                            <option>Сначала дорогие</option>
+                            <option>По новизне</option>
+                            <option>По рейтингу</option>
+                        </select>
+                    </div>
+                </div>
+                
+                
+                <div class="row">
+                    {% for product in products %}
+
+
+                    <div class="col-md-4">
+                        <div class="card game-card h-100">
+                            {% if product.sale != 0 %}
+                                <span class="badge bg-danger position-absolute" style="top: 10px; right: 10px;">-{{ product.sale }}%</span>
+                            {% endif %}
+                            
+                     
+                            
+                                <img src="{{ product.image.url }}" class="product-card-img" alt="{{ product.name }}">
+                            
+                            <div class="card-body">
+                                <h5 class="card-title">{{product.name}}</h5>
+                                <p class="card-text">{{product.description}}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-success platform-badge">{{product.platform}}</span>
+                                    <div>
+                                        {% if product.sale != 0 %}
+                                            <span class="text-muted text-decoration-line-through me-2">{{ product.price }} ₽</span>
+                                            <span class="text-danger fw-bold">{{ product.total_price }} ₽</span>
+                                        {% else %}
+                                            <span class=" me-2">{{ product.price }} ₽</span>
+                                        {% endif %}
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {% if product in baskets_products %}
+                            <div class="card-footer bg-white">
+                                <button class="btn btn-success added-to-cart-btn">
+                                    <i class="fas fa-check me-2"></i> Добавлено
+                                </button>
+                            </div>
+                            {% else %}
+                            <div class="card-footer bg-white">
+                                <a href="{% url "products:basket_add" product.id%}" class="btn btn-primary w-100">В корзину</a>
+                            </div>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                {% endfor %}    
+                
+                
+                <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item {% if not products.has_previous %}  disabled {% endif %}">
+                        <a class="page-link" href="{% if products.has_previous %} {% url "products:paginator" products.previous_page_number %} {% else %} # {% endif %}" 
+                        tabindex="-1" aria-disabled="true">
+                            &laquo;
+                        </a>
+                    </li>
+                    {% for page in products.paginator.page_range %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% url "products:paginator" page%}">
+                                {{ page }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                    
+                    
+                    <li class="page-item {% if not products.has_next %}  disabled {% endif %}">
+                        <a class="page-link" 
+                        href="{% if products.has_next %} {% url "products:paginator" products.next_page_number%} {% else %} # {% endif %}">
+                            &raquo;
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            </div>
+        </div>
+    </div>
+
+{% endblock  %}
