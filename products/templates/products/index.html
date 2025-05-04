@@ -1,29 +1,105 @@
 {% extends "products/base.html" %}
 {% load static %}
 
+
 {% block css %}
-    <link href="{% static 'vendor/css/index.css' %}" rel="stylesheet">
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
 {% endblock  %}
 
+<body>
+
+    
+
 {% block content %}
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <h1 class="mt-5">Store</h1>
-                <p>
-                    Новые образы и лучшие бренды на Store.
-                    Бесплатная доставка по всему миру! Аутлет: до -70% Собственный бренд. -20% новым покупателям.
-                </p>
-                <button id="start-purchase-btn" type="button" class="btn btn-lg">
-                    <a id="start-purchase-link" href="{% url 'products:index' %}">
-                        Начать покупки
-                    </a>
-                </button>
+    <div class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4">Лучшие игры по лучшим ценам</h1>
+            <p class="lead">Покупайте ключи для Steam, Origin, Epic Games и других платформ</p>
+            <form class="d-flex justify-content-center mt-4">
+                <input class="form-control me-2 w-50" type="search" placeholder="Найти игру...">
+                <button class="btn btn-success" type="submit">Поиск</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="benefits-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Почему выбирают нас?</h2>
+            <div class="row">
+                <!-- Преимущество 1 -->
+                <div class="col-md-3 mb-4">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <h4>Скидки круглый год</h4>
+                        <p>Постоянные акции и специальные предложения для наших клиентов</p>
+                    </div>
+                </div>
+                
+                <!-- Преимущество 2 -->
+                <div class="col-md-3 mb-4">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4>Оперативная поддержка</h4>
+                        <p>Наша служба поддержки работает 24/7 и всегда готова помочь</p>
+                    </div>
+                </div>
+                
+                <!-- Преимущество 3 -->
+                <div class="col-md-3 mb-4">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <h4>Лучшие цены</h4>
+                        <p>Гарантируем самые низкие цены на рынке цифровых товаров</p>
+                    </div>
+                </div>
+                
+                <!-- Преимущество 4 -->
+                <div class="col-md-3 mb-4">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h4>Мгновенная доставка</h4>
+                        <p>Получите ключ сразу после оплаты на почту или в личный кабинет</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</section>
-{% endblock  %}
+    
 
+    <div class="container mt-5">
+        <h2 class="mb-4">Популярные игры</h2>
+        <div class="row">
 
+            {% for product in products  %}
+            <div class="col-md-4 mb-4">
+                <div class="card game-card h-100">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{products.name}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{product.name}}</h5>
+                        <p class="card-text">{{product.description}}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-success">{{product.platform}}</span>
+                            <span class="text-danger fw-bold">{{product.price}}</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <a href="#" class="btn btn-primary w-100">В корзину</a>
+                    </div>
+                </div>
+            </div>
+    {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}
+
+    

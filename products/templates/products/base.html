@@ -1,85 +1,93 @@
-
 {% load static %}
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ru">
 <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    {% block css %}{% endblock  %}
 
-    {% block css %} {% endblock %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">{{ title }}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if page == 'index' %}active {% endif %}" href="{% url "index" %}">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link{% if page == 'catalog' %} active {% endif %}" href="{% url "products:index" %}">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if page == 'about' %}active {% endif %}" href="{% url "about" %}">О нас</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    
+                    {% if user.is_authenticated %}
+                    {% if basketsCount != 0 %}
+                    <a href="{% url "users:basket" %}" class="btn btn-outline-light me-2">
+                        Корзина <span id="cart-count">{{basketsCount}}</span>
+                    </a>
+                    {% endif %}
+                    
+                    <a href="{% url "users:profile" %}" class="btn btn-primary"><i class="fas fa-user me-1"></i>Профиль</a>
+                    {% else %}
+                    
+                    <a href="{% url "users:login" %}" class="btn btn-primary">Войти</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
 </head>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'index' %}">Store</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'products:index'%}">Каталог <i class="fas fa-shopping-bag"></i> </a>
-                </li>
-                
-            {% if user.is_authenticated %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user-circle"></i>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item" href="{% url "users:profile" %}">Профиль</a>
-                        </li>
-                        {% comment %} <li><a class="dropdown-item" href="orders/orders.html">Заказы</a></li> {% endcomment %}
-                    {% if user.is_superuser or user.is_staff %}
-                        <li><a class="dropdown-item" href="{% url "admin:index" %}">Админ-панель</a></li>
-                    {% endif %}
-                        
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{% url "users:logout" %}">
-                                Выйти
-                            </a>
-                        </li>
+<body>
+    {% block content %}{% endblock  %}
+    
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>{{navbar}}</h5>
+                    <p>Лучший магазин цифровых товаров для геймеров. Работаем с 2025 года.</p>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Магазин</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url "products:index" %}" class="text-white">Каталог</a></li>
+                        <li><a href="{% url "products:index" %}" class="text-white">Акции</a></li>
+                        <li><a href="{% url "products:index" %}" class="text-white">Новинки</a></li>
                     </ul>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url "users:login" %}">Войти <i class="fas fa-sign-in-alt"></i></a>
-                </li>
-            {% endif %}
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Информация</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url "about" %}" class="text-white">О нас</a></li>
+                        <li><a href="{% url "about" %}" class="text-white">Контакты</a></li>
+                        
+                    </ul>
+                </div>
                 
-            </ul>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 {{title}}. Все права защищены.</p>
+            </div>
         </div>
-    </div>
-</nav>
+    </footer>
 
-
-{% block content %} {% endblock %}
-{% block footer %} {% endblock %}
-
-
-<script src="/static/vendor/jquery/jquery.min.js"></script>
-<script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous">
-</script>
-<script src="/static/vendor/fontawesome/fontawesome-icons.js" crossorigin="anonymous"></script>
-
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block script %}{% endblock  %}
 </body>
-
 </html>
+

@@ -1,0 +1,85 @@
+.login-hero {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    padding: 4rem 0;
+    margin-bottom: 2rem;
+}
+
+.login-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-card-header {
+    background-color: #2a5298;
+    color: white;
+    border-radius: 10px 10px 0 0 !important;
+    padding: 1.5rem;
+}
+
+.form-control:focus {
+    border-color: #2a5298;
+    box-shadow: 0 0 0 0.25rem rgba(42, 82, 152, 0.25);
+}
+
+.btn-login {
+    background-color: #2a5298;
+    color: white;
+    padding: 0.5rem 2rem;
+}
+
+.btn-login:hover {
+    background-color: #1e3c72;
+    color: white;
+}
+
+.register-link {
+    color: #2a5298;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.social-login .btn {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    color: #6c757d;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.divider::before {
+    margin-right: 10px;
+}
+
+.divider::after {
+    margin-left: 10px;
+}
+

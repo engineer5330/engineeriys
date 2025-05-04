@@ -4,13 +4,14 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
-from products import views
+from products.views import index, about
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name="index"),
+    path('', index, name="index"),
     path('products/', include('products.urls', namespace="products") ),
-    path('users/', include('users.urls', namespace="users") )
+    path('users/', include('users.urls', namespace="users") ),
+    path('about/', about, name='about'),
 ]
 
 if settings.DEBUG:

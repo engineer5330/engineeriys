@@ -1,0 +1,118 @@
+{% extends "users/profilebase.html" %}
+{% load static %}
+
+{% block component %}
+
+
+<div class="col-md-9">
+    <div class="row">
+            
+            <div class="col-lg-8">
+                
+                <div class="empty-cart d-none">
+                    <div class="empty-cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>Ваша корзина пуста</h3>
+                    <p class="text-muted">Добавьте товары из каталога, чтобы продолжить</p>
+                    <a href="/catalog/" class="btn btn-primary mt-3">Перейти в каталог</a>
+                </div>
+
+                
+                <div class="cart-items">
+                    {% for basket in baskets %}
+                        <div class="card cart-item">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2">
+                                        <img src="" alt="{{ basket.product.name }}" class="cart-item-img">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5 class="mb-1">{{ basket.product.name }}</h5>
+                                        <p class="text-muted mb-1">{{ basket.product.platform }}</p>
+                                        
+                                    </div>
+                                    <div class="col-md-3">
+                                        
+                                    </div>
+                                    <div class="col-md-2 text-end">
+                                        {% if basket.product.sale != 0 %}      
+                                            <h5 class="mb-0">{{basket.product.total_price}} ₽</h5>
+                                            <small class="text-muted text-decoration-line-through">{{basket.product.price}} ₽</small>
+                                        {% else  %}
+                                            <h5 class="mb-0">{{basket.product.price}} ₽</h5>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-1 text-end">
+                                        <button class="btn btn-link text-danger remove-btn">
+                                            <a href="{%  url "products:basket_del" basket.id %}"><i class="fas fa-trash"></i></a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    
+
+
+                    
+                    
+                </div>
+            </div>
+
+            
+            <div class="col-lg-4">
+                <div class="summary-card">
+                    <h4 class="mb-4">Итоговая информация</h4>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Товары ({{basketsCount}}):</span>
+                        <span>{{baskets.total_sum}} ₽</span>
+                    </div>
+                    
+                        {% if  baskets.total_sale_price != 0%}
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Скидка:</span>
+                            <span class="text-success">-{{baskets.total_sale_price}} ₽</span>
+                        </div>
+                        <hr>
+                        {% endif %}
+                        
+                    
+                    
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5>Итого:</h5>
+                        <h5>{{baskets.total_sum_sale}} ₽</h5>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <a href="#" class="btn btn-checkout btn-lg">
+                            Оформить заказ
+                        </a>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <p class="text-muted small">
+                            <i class="fas fa-lock me-2"></i>
+                            Ваши данные защищены. Мы используем 256-битное шифрование.
+                        </p>
+                    </div>
+                </div>
+
+                
+                {% comment %} <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Промокод</h5>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Введите промокод">
+                            <button class="btn btn-outline-secondary" type="button">Применить</button>
+                        </div>
+                        <p class="text-muted small">Есть промокод? Введите его здесь для получения скидки.</p>
+                    </div>
+                </div> {% endcomment %}
+            </div>
+        </div>
+</div>
+
+
+{% endblock  %}

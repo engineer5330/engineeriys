@@ -1,9 +1,121 @@
-{% extends "users/profilebase.html" %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет | GameKey Store</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .profile-section {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .order-card {
+            transition: transform 0.2s;
+            margin-bottom: 15px;
+        }
+        .order-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .nav-pills .nav-link.active {
+            background-color: #2a5298;
+        }
+        .nav-pills .nav-link {
+            color: #2a5298;
+        }
+        .badge-status {
+            font-size: 0.8rem;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигационная панель (как на других страницах) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">GameKey Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/catalog/">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about/">О нас</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="/cart/" class="btn btn-outline-light me-2">
+                        Корзина (<span id="cart-count">2</span>)
+                    </a>
+                    <a href="/profile/" class="btn btn-primary">
+                        <i class="fas fa-user me-1"></i> Мой профиль
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
+    <!-- Основной контент -->
+    <div class="container my-4">
+        <div class="row">
+            <!-- Боковая панель -->
+            <div class="col-md-3">
+                <div class="profile-section text-center">
+                    <img src="https://via.placeholder.com/150?text=User" alt="Аватар" class="profile-avatar mb-3">
+                    <h4>Иван Петров</h4>
+                    <p class="text-muted">Пользователь с 15.03.2023</p>
+                    <div class="d-grid gap-2">
+                        <a href="/logout/" class="btn btn-outline-danger">Выйти</a>
+                    </div>
+                </div>
 
-{% block component %}
-<div class="col-md-9">
+                <!-- Меню профиля -->
+                <ul class="nav nav-pills flex-column mt-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/profile/">
+                            <i class="fas fa-user me-2"></i>Профиль
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile/orders/">
+                            <i class="fas fa-shopping-bag me-2"></i>Мои заказы
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile/settings/">
+                            <i class="fas fa-cog me-2"></i>Настройки
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile/wishlist/">
+                            <i class="fas fa-heart me-2"></i>Список желаний
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Основная информация -->
+            <div class="col-md-9">
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
                         <h5 class="mb-0"><i class="fas fa-user-circle me-2"></i>Личная информация</h5>
@@ -12,35 +124,31 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Логин</label>
-                                    <p class="form-control-static">{{user.username}}</p>
-                                </div>
-                                <div class="mb-3">
                                     <label class="form-label">Имя</label>
-                                    <p class="form-control-static">{{user.first_name}}</p>
+                                    <p class="form-control-static">Иван</p>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Email</label>
-                                    <p class="form-control-static">{{user.email}}</p>
+                                    <p class="form-control-static">ivan.petrov@example.com</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Фамилия</label>
-                                    <p class="form-control-static">{{user.last_name}}</p>
+                                    <p class="form-control-static">Петров</p>
                                 </div>
-                                {% comment %} <div class="mb-3">
+                                <div class="mb-3">
                                     <label class="form-label">Телефон</label>
-                                    <p class="form-control-static">{{user.phone}}</p>
-                                </div> {% endcomment %}
+                                    <p class="form-control-static">+7 (900) 123-45-67</p>
+                                </div>
                             </div>
                         </div>
-                        <a href="{% url "users:editprofile" %}" class="btn btn-outline-primary">Редактировать профиль</a>
+                        <a href="/profile/edit/" class="btn btn-outline-primary">Редактировать профиль</a>
                     </div>
                 </div>
 
-                {% comment %} заказы {% endcomment %}
-                {% comment %} <div class="card mb-4">
+                <!-- Последние заказы -->
+                <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
                         <h5 class="mb-0"><i class="fas fa-history me-2"></i>Последние заказы</h5>
                     </div>
@@ -107,10 +215,10 @@
                             <a href="/profile/orders/" class="btn btn-primary">Все заказы</a>
                         </div>
                     </div>
-                </div> {% endcomment %}
+                </div>
 
-
-                {% comment %} <div class="row">
+                <!-- Бонусы и статистика -->
+                <div class="row">
                     <div class="col-md-6 mb-4">
                         <div class="card h-100">
                             <div class="card-header bg-primary text-white">
@@ -155,6 +263,24 @@
                             </div>
                         </div>
                     </div>
-                </div> {% endcomment %}
-</div>
-{% endblock  %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подвал (как на других страницах) -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2024 GameKey Store. Все права защищены.</p>
+            <div class="mt-2">
+                <a href="#" class="text-white me-3">Политика конфиденциальности</a>
+                <a href="#" class="text-white me-3">Условия использования</a>
+                <a href="#" class="text-white">Контакты</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
